@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="在浏览器中合并、编辑和检查 Arcaea songlist。">
+  <title>Songlist Studio · 曲目表管理器</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./core.js" defer></script><script src="./app.js" defer></script>
+</head>
+<body>
+<header><a class="brand" href="./"><span class="brand-icon">♫</span> Songlist <strong>Studio</strong></a><span class="local-badge"><i></i> 文件在本机处理</span></header>
+<main>
+  <section class="intro"><div class="eyebrow">ARCAEA FANMADE / SONG COLLECTION</div><h1>整理曲目，留住每个细节。</h1><p>导入主表、追加谱面包、检查问题，最后下载你的新 songlist。</p></section>
+  <section class="toolbar" aria-label="文件操作">
+    <button id="load-main" class="primary">＋ 导入主 songlist</button>
+    <button id="load-child" disabled>追加子表</button>
+    <button id="download-original" disabled>下载初始文件</button>
+    <div class="toolbar-spacer"></div><button id="check" disabled>检查曲目表</button><button id="export" class="accent" disabled>导出修改版 ↗</button>
+    <input id="main-file" type="file" hidden><input id="child-files" type="file" multiple hidden>
+    <input id="resource-files" type="file" webkitdirectory multiple hidden>
+  </section>
+  <section class="stats" aria-label="当前状态"><div><span>主文件</span><strong id="file-name">尚未导入</strong></div><div><span>曲目总数</span><strong id="song-count">—</strong></div><div><span>检查结果</span><strong id="issue-count">等待检查</strong></div><div><span>编辑状态</span><strong id="edit-state">等待导入</strong></div></section>
+  <section class="workspace">
+    <div class="collection panel">
+      <div class="panel-heading"><h2>曲目列表 <span id="visible-count"></span></h2><div><button id="undo" class="small" disabled>撤销</button><button id="delete" class="small danger" disabled>删除所选</button></div></div>
+      <label class="search"><span>⌕</span><input id="search" type="search" placeholder="搜索曲名、ID、艺术家" aria-label="搜索曲目"></label>
+      <div id="empty" class="empty"><div class="empty-symbol">≡</div><h3>从一份 songlist 开始</h3><p>支持无扩展名的 songlist 和 JSON 文件。<br>初始文件随时可以单独下载。</p><button id="try-demo">先试用示例</button></div>
+      <div class="table-wrap" id="table-wrap" hidden><table><thead><tr><th><input id="select-all" type="checkbox" aria-label="选择当前显示的全部曲目"></th><th>曲目 / ID</th><th>艺术家</th><th>难度</th></tr></thead><tbody id="songs"></tbody></table></div>
+    </div>
+    <aside class="panel inspector">
+      <div class="panel-heading"><h2>JSON 编辑区</h2><button id="edit-full" class="small" disabled>编辑完整表</button></div>
+      <p id="editor-label" class="muted">选择一首曲目查看和修改，或编辑完整曲目表。</p>
+      <textarea id="editor" spellcheck="false" aria-label="JSON 编辑区" placeholder="导入后在这里查看 JSON" disabled></textarea>
+      <div class="editor-footer"><span id="draft-label">修改后点击应用</span><button id="apply" class="primary small" disabled>应用并检查</button></div>
+    </aside>
+  </section>
+  <section class="panel results"><div class="panel-heading"><h2>检查与操作记录</h2><div><button id="resources" class="small" disabled>选择资源文件夹</button><button id="clear-log" class="small">清空记录</button></div></div><p class="muted" id="resource-status">字段检查可直接使用。选择资源文件夹后，可进一步检查曲目目录、音频、封面、AFF 和背景是否存在。</p><div id="log" role="log" aria-live="polite"><p class="log-entry info">导入文件后，所有编辑均在当前浏览器页面中进行。关闭页面前请下载修改版。</p></div></section>
+  <footer>初始文件保持原始字节 · 修改版采用 UTF-8 · 发布到 GitHub Pages 即可使用</footer>
+</main>
+<dialog id="error-dialog"><div class="panel-heading"><h2>定位 JSON 问题</h2><button id="close-error" class="small">关闭</button></div><pre id="error-report"></pre><button id="copy-error" class="primary small">复制完整提示</button><span id="copy-state" class="muted"></span></dialog>
+</body></html>
